@@ -20,3 +20,5 @@ posicionamento de um componente qualquer.
 R: define a estrutura visual da interface do usuário. É composto por uma ou várias 
 Views (caixa rectangular que responde às ações do usuário), que juntas, formam o 
 design do aplicativo e interagem com o usuário, como por exemplo, ConstraintLayout e RelativeLayout
+
+OBS: QUESTÂO 6 E 7 ESTÃO NO MESMO PORJETO 
