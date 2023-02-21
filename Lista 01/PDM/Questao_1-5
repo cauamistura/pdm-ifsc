@@ -1,0 +1,22 @@
+1) O é a classe R em um projeto android?
+R: A Classe R é gerada automaticamente ao compilar o projeto e contém as constantes 
+para acessar os diversos recursos do projeto
+
+2) O que Activity no Android, para que serve?
+R: é o componente do Android responsável por mostrar telas ao usuário e permitir que
+ele interaja com essas telas através de toques e cliques
+
+3) O que é o arquivo Manifesto em um projeto Android e quais informações podem ser declaradas nele.
+R: O arquivo de manifesto descreve informações essenciais sobre o aplicativo para as 
+ferramentas de compilação do Android
+
+4) O que são os níveis de API de uma aplicação Android e o quer implica uma aplicação utilizar uma
+determinada API.
+R: O sistema de níveis de API do Android ajuda o Android a determinar se um aplicativo é compatível 
+com uma imagem do sistema Android antes de instalar o aplicativo em um dispositivo
+
+5) O que é constraintLayout no android? Para que serve, cite ao menos dois exemplos de uso com
+posicionamento de um componente qualquer.
+R: define a estrutura visual da interface do usuário. É composto por uma ou várias 
+Views (caixa rectangular que responde às ações do usuário), que juntas, formam o 
+design do aplicativo e interagem com o usuário, como por exemplo, ConstraintLayout e RelativeLayout
