@@ -1,0 +1,12 @@
+1- Considerando as formas de inclusão de CSS a um código CSS, qual o resultado do código a seguir:
+Escreva na tabela abaixo qual é a cor e o mais importante a explicação do porque ela foi aplicada em
+cada linha do documento HTML.
+Linha
+HTML
+Conteúdo                                     Resultado explicado de forma “clara”
+13 <p>Lorem-1</p>                            cor: Vermelho
+14 <p style="color:black">Lorem-2</p>        cor: preto
+15 <p id="p3">Lorem-3</p>                    cor: azul
+16 <p class="class1">Lorem-4</p>             cor: amarelo 
+17 <p id="p3" class="class1" >Lorem-5</p>    cor: laranja
+18 <p >Lorem-6</p>                           cor: vermelho
