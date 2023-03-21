@@ -34,18 +34,4 @@
         android:layout_gravity="center_horizontal"
         android:text="Calcular"/>
 
-    <TextView
-        android:id="@+id/lbImc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="IMC: "
-        android:textStyle="bold"/>
-
-    <ImageView
-        android:id="@+id/imgResult"
-        android:layout_width="match_parent"
-        android:layout_height="273dp"
-        android:layout_weight="1" />
-
 </LinearLayout>
