@@ -1,6 +1,7 @@
 package br.com.caua.aula04;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,8 +10,11 @@ public class Resultado extends MainActivity{
         private ImageView igmResult ;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+
             super.onCreate(savedInstanceState);
             setContentView(R.layout.resultado);
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             lbIMC = findViewById(R.id.lbImc);
             igmResult = findViewById(R.id.imgResult);
@@ -38,4 +42,14 @@ public class Resultado extends MainActivity{
                 igmResult.setImageResource(R.drawable.obesidade3);
             }
         }
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
