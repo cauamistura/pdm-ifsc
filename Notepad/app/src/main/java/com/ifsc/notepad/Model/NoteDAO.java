@@ -20,10 +20,7 @@ public class NoteDAO {
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_TEXT = "text";
 
-    private static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
-            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_TITLE + " VARCHAR, " +
-            COLUMN_TEXT + " VARCHAR)";
+    private static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +COLUMN_TITLE + " VARCHAR, " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_TEXT + " VARCHAR)";
 
     public NoteDAO(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
@@ -92,9 +89,10 @@ public class NoteDAO {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            // Implement if you need to handle database upgrades in the future
         }
+
     }
+
 }
 
 
