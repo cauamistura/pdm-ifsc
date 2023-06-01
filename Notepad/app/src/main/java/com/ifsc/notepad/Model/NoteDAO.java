@@ -6,9 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoteDAO {
 
@@ -27,40 +27,59 @@ public class NoteDAO {
         db = dbHelper.getWritableDatabase();
     }
 
-    public Boolean insertNote(Note note) {
-        ContentValues content = new ContentValues();
-        try {
+    public boolean insertNote(Note note) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_TITLE, note.getTitle());
+        contentValues.put(COLUMN_TEXT, note.getContent());
 
-            content.put(COLUMN_ID, note.getId());
-            content.put(COLUMN_TITLE, note.getTitle());
-            content.put(COLUMN_TEXT, note.getContent());
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        return result != -1;
+    }
 
-            this.db.insert(TABLE_NAME, null, content);
-            return true;
+    public boolean updateNote(Note note) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_TITLE, note.getTitle());
+        contentValues.put(COLUMN_TEXT, note.getContent());
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        String whereClause = COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(note.getId())};
+
+        int rowsAffected = db.update(TABLE_NAME, contentValues, whereClause, whereArgs);
+        return rowsAffected > 0;
+    }
+
+    public boolean deleteNote(Integer note) {
+        String whereClause = COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(note)};
+
+        int rowsAffected = db.delete(TABLE_NAME, whereClause, whereArgs);
+        return rowsAffected > 0;
+    }
+
+    @SuppressLint("Range")
+    public Note getNote(int id) {
+        String selection = COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+
+        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            Note note;
+            note = new Note(
+                    cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)),
+                    cursor.getString(cursor.getColumnIndex(COLUMN_TEXT))
+            );
+            cursor.close();
+            return note;
         }
-        return false;
-    }
 
-    public Boolean updateNote(Note note) {
-        return false;
-    }
-
-    public Boolean deleteNote(Note note) {
-        return false;
-    }
-
-    public Note getNote(Integer Id) {
+        cursor.close();
         return null;
     }
 
-    public ArrayList<Note> getListNotes() {
-        String sql = "SELECT * FROM " + TABLE_NAME;
-        Cursor cursor = db.rawQuery(sql, null);
-
-        ArrayList<Note> list = new ArrayList<>();
+    public List<Note> getListNotes() {
+        List<Note> noteList = new ArrayList<>();
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 @SuppressLint("Range") Note note = new Note(
@@ -68,13 +87,12 @@ public class NoteDAO {
                         cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_TEXT))
                 );
-                list.add(note);
+                noteList.add(note);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return list;
+        return noteList;
     }
-
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -92,7 +110,4 @@ public class NoteDAO {
         }
 
     }
-
 }
-
-

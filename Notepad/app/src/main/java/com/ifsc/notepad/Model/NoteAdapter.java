@@ -1,45 +1,68 @@
 package com.ifsc.notepad.Model;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.ifsc.notepad.Controll.NoteController;
 import com.ifsc.notepad.R;
+import com.ifsc.notepad.View.MainActivity;
+import com.ifsc.notepad.View.NoteEdit;
 
 import java.util.List;
 
-public class NoteAdapter extends ArrayAdapter {
+public class NoteAdapter extends ArrayAdapter<Note> {
+    private List<Note> itemList;
+    private Context context;
 
-    Context context;
-    List<ApplicationInfo> notes;
-    int resouceLayout;
+    private NoteController FNoteController;
 
+    public NoteAdapter(Context context, List<Note> itemList) {
+        super(context, 0, itemList);
+        this.context = context;
+        this.itemList = itemList;
+    }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        convertView = layoutInflater.inflate(resouceLayout, parent, false);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View listItemView = convertView;
+        if (listItemView == null) {
+            listItemView = LayoutInflater.from(context).inflate(R.layout.list_note, parent, false);
+        }
 
-        TextView textView   =  convertView.findViewById(R.id.visibleTitle);
+        Note currentItem = itemList.get(position);
 
-        ApplicationInfo app = notes.get(position);
-        textView.setText(app.loadLabel(context.getPackageManager()));
+        TextView textView = listItemView.findViewById(R.id.visibleTitle);
+        ImageButton editButton = listItemView.findViewById(R.id.editButton);
+        ImageButton deleteButton = listItemView.findViewById(R.id.imageButton);
 
-        return convertView;
+        textView.setText(currentItem.getTitle());
+
+        FNoteController = new NoteController(getContext());
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FNoteController.deleteNote(currentItem.getId());
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NoteEdit.class);
+                intent.putExtra("note_id", currentItem.getId());
+                getContext().startActivity(intent);
+            }
+        });
+
+
+        return listItemView;
     }
 
-    public NoteAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List objects) {
-        super(context, resource, textViewResourceId, objects);
-
-        this.context       = context;
-        this.notes         = objects;
-        this.resouceLayout = resource;
-    }
 }

@@ -1,10 +1,5 @@
 package com.ifsc.notepad.Model;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-
-import java.util.ArrayList;
-
 public class Note {
     private Integer id;
     private String  title, content;

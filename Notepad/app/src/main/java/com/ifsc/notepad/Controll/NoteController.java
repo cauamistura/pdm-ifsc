@@ -16,9 +16,6 @@ public class NoteController {
     }
 
     public Boolean insertNote(Note note) {
-        if (note.getTitle() != null && !note.getTitle().isEmpty()){
-            return false;
-        }
         return FDAONote.insertNote(note);
     }
 
@@ -26,7 +23,7 @@ public class NoteController {
         return FDAONote.updateNote(note);
     }
 
-    public Boolean deleteNote(Note note){
+    public Boolean deleteNote(Integer note){
         return FDAONote.deleteNote(note);
     }
 
@@ -35,7 +32,7 @@ public class NoteController {
     }
 
     public ArrayList<Note> getListNotes(){
-        return FDAONote.getListNotes();
+        return (ArrayList<Note>) FDAONote.getListNotes();
     }
 
 }

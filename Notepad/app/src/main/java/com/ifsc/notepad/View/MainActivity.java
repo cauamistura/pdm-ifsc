@@ -1,30 +1,24 @@
 package com.ifsc.notepad.View;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.service.controls.actions.FloatAction;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.ifsc.notepad.Controll.NoteController;
 import com.ifsc.notepad.Model.Note;
 import com.ifsc.notepad.Model.NoteAdapter;
 import com.ifsc.notepad.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FloatingActionButton btnAddNote;
     private ListView listView;
-    private PackageManager pm;
+    private NoteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,50 +27,29 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Bloco de Notas");
 
-        btnAddNote = findViewById(R.id.btnAddNote);
-        btnAddNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openNote(view, null);
-            }
-        });
-
-
-        // Iniciando Lista de notas
-//        ArrayList<Note> Notes = new ArrayList<>();
-//        List<Note> apps =
-//        for (ApplicationInfo app : apps) {
-//            appsNames.add(app.loadLabel(pm).toString());
-//        }
+        setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.listNote);
 
-//        NoteAdapter adapterPersonalizado = new NoteAdapter(this, R.layout.list_note, null);
+        NoteController FNoteController = new NoteController(this);
+        List<Note> itemList = FNoteController.getListNotes();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter = new NoteAdapter(this, itemList);
+
+        listView.setAdapter(adapter);
+
+        FloatingActionButton button = findViewById(R.id.floatingActionButton);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ApplicationInfo applicationInfo = (ApplicationInfo) adapterView.getItemAtPosition(i);
-                String packageName = applicationInfo.packageName;
-                Toast.makeText(MainActivity.this, "Abrindo o nota", Toast.LENGTH_SHORT).show();
-
-                Intent intent = pm.getLaunchIntentForPackage(packageName);
-                if (intent != null) {
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "Não foi possível abrir abrir a nota", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View view) {
+                openNote();
             }
         });
 
-        //Setando o adapter
-//        list.setAdapter(adapterPersonalizado);
-
     }
 
-    public void openNote(View v, Note note){
-        Intent i = new Intent(this, NoteEdit.class);
-        startActivity(i);
+    private void openNote() {
+        Intent intent = new Intent(MainActivity.this, NoteEdit.class);
+        startActivity(intent);
     }
-
 }
