@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private NoteAdapter adapter;
 
+    private NoteController FNoteController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listNote);
 
-        NoteController FNoteController = new NoteController(this);
+        FNoteController = new NoteController(this);
         List<Note> itemList = FNoteController.getListNotes();
 
         adapter = new NoteAdapter(this, itemList);
@@ -52,4 +54,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, NoteEdit.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            List<Note> updatedNoteList = FNoteController.getListNotes();
+            adapter.clear();
+            adapter.addAll(updatedNoteList);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }

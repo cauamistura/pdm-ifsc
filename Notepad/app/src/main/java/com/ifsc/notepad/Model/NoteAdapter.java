@@ -60,8 +60,6 @@ public class NoteAdapter extends ArrayAdapter<Note> {
                 getContext().startActivity(intent);
             }
         });
-
-
         return listItemView;
     }
 
