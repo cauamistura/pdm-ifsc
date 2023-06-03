@@ -3,7 +3,6 @@ package com.ifsc.notepad.Controll;
 import android.content.Context;
 
 import com.ifsc.notepad.Model.Note;
-import com.ifsc.notepad.Model.NoteDAO;
 
 import java.util.ArrayList;
 
@@ -33,6 +32,10 @@ public class NoteController {
 
     public ArrayList<Note> getListNotes(){
         return (ArrayList<Note>) FDAONote.getListNotes();
+    }
+
+    public ArrayList<Note> getListFilterNotes(String filter){
+        return (ArrayList<Note>) FDAONote.getListFilterNotes(filter);
     }
 
 }

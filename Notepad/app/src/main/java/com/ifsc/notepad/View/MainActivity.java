@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.ifsc.notepad.Controll.NoteController;
@@ -44,6 +46,30 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 openNote();
+            }
+        });
+
+        EditText txtFilter = findViewById(R.id.edFilter);
+
+        ImageButton btnSearch = findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String filter = String.valueOf(txtFilter.getText());
+                reloadList(
+                        FNoteController.getListFilterNotes(filter.trim())
+                );
+            }
+        });
+
+        ImageButton btnClear = findViewById(R.id.btnClear);
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtFilter.setText("");
+                reloadList(
+                        FNoteController.getListNotes()
+                );
             }
         });
 

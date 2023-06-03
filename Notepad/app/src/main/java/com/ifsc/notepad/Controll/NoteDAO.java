@@ -1,4 +1,4 @@
-package com.ifsc.notepad.Model;
+package com.ifsc.notepad.Controll;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.ifsc.notepad.Model.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,28 @@ public class NoteDAO {
         cursor.close();
         return noteList;
     }
+
+    public List<Note> getListFilterNotes(String filter) {
+        List<Note> noteList = new ArrayList<>();
+
+        String selection = COLUMN_TITLE + " LIKE ?";
+        String[] selectionArgs = {"%" + filter + "%"};
+
+        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") Note note = new Note(
+                        cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_TEXT))
+                );
+                noteList.add(note);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return noteList;
+    }
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
