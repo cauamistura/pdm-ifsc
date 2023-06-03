@@ -1,6 +1,8 @@
 package com.ifsc.notepad.Model;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +50,19 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FNoteController.deleteNote(currentItem.getId());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Deseja realmente apagar a nota\n'" + currentItem.getTitle() +"' ?");
+                //Obções
+                builder.setNegativeButton("Não", null);
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FNoteController.deleteNote(currentItem.getId());
+                        MainActivity.reloadList(FNoteController.getListNotes());
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

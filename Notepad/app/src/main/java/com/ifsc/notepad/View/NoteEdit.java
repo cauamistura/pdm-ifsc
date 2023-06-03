@@ -55,6 +55,8 @@ public class NoteEdit extends AppCompatActivity {
                     noteController.insertNote(newNote);
                 }
 
+                MainActivity.reloadList(noteController.getListNotes());
+
                 finish();
             }
         });

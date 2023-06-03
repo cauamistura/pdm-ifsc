@@ -1,6 +1,5 @@
 package com.ifsc.notepad.View;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +14,10 @@ import com.ifsc.notepad.R;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private ListView listView;
-    private NoteAdapter adapter;
+    static NoteAdapter adapter;
 
     private NoteController FNoteController;
 
@@ -33,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listNote);
 
+
         FNoteController = new NoteController(this);
         List<Note> itemList = FNoteController.getListNotes();
-
         adapter = new NoteAdapter(this, itemList);
 
         listView.setAdapter(adapter);
@@ -55,16 +54,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public static void reloadList(List<Note> list) {
+        adapter.clear();
+        adapter.addAll(list);
 
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            List<Note> updatedNoteList = FNoteController.getListNotes();
-            adapter.clear();
-            adapter.addAll(updatedNoteList);
-            adapter.notifyDataSetChanged();
-        }
+        // Notifica o adaptador sobre as mudanças nos dados
+        adapter.notifyDataSetChanged();
     }
+
 
 }
