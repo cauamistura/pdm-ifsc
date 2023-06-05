@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity  {
             public void onClick(View view) {
                 String filter = String.valueOf(txtFilter.getText());
                 reloadList(
-                        FNoteController.getListFilterNotes(filter.trim())
+                        FNoteController.getNotesFilter(filter.trim())
                 );
             }
         });

@@ -34,8 +34,8 @@ public class NoteController {
         return (ArrayList<Note>) FDAONote.getListNotes();
     }
 
-    public ArrayList<Note> getListFilterNotes(String filter){
-        return (ArrayList<Note>) FDAONote.getListFilterNotes(filter);
+    public ArrayList<Note> getNotesFilter(String filter){
+        return (ArrayList<Note>) FDAONote.getNotesFilter(filter);
     }
 
 }

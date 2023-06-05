@@ -96,7 +96,7 @@ public class NoteDAO {
         return noteList;
     }
 
-    public List<Note> getListFilterNotes(String filter) {
+    public List<Note> getNotesFilter(String filter) {
         List<Note> noteList = new ArrayList<>();
 
         String selection = COLUMN_TITLE + " LIKE ?";
